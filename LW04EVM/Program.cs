@@ -58,7 +58,40 @@ namespace ConsoleApp1
                             Obrabotka(start, end, number2)));
                     } else if (choose == 2)
                     {
-
+                        bool otr = false;
+                        string s1 = "";
+                        string s2 = "";
+                        Console.WriteLine("1 число: " + Obrabotka(start, end, number));
+                        Console.WriteLine("2 число: " + Obrabotka(start, end, number2));
+                        if (Obrabotka(start, end, number).StartsWith('1'))
+                        {
+                            s1 += '0' + Obrabotka(start, end, number).Substring(1, Obrabotka(start, end, number).Length-1);
+                            otr = true;
+                        }
+                        else
+                        {
+                            s1 = Obrabotka(start, end, number);
+                        }
+                        if (Obrabotka(start, end, number2).StartsWith('1'))
+                        {
+                            s2 += '0' + Obrabotka(start, end, number2).Substring(1, Obrabotka(start, end, number2).Length - 1);
+                            if (otr)
+                                otr = false;
+                            else 
+                                otr = true;
+                        }
+                        else
+                        {
+                            s2 = Obrabotka(start, end, number2);
+                        }
+                        Console.WriteLine("1 число после: " + s1);
+                        Console.WriteLine("2 число после: " + s2);
+                        int count = 0;
+                        while (AddBinary(s1, "10000001")!="00000000")
+                        {
+                            Console.WriteLine(count);
+                                count++;
+                        }
                     }
                 }
                 else
