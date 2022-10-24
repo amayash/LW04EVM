@@ -42,7 +42,7 @@ namespace ConsoleApp1
                     Console.WriteLine("Ошибка ввода. Выберите операцию: (1) сложение (умеет складывать положительные" +
                     " и отрицательные числа), (2) умножение, (3) деление");
                 }
-                if (choose>3 || choose<1)
+                if (choose > 3 || choose < 1)
                 {
                     Console.WriteLine("Ошибка ввода. Выбор принят за сложение.");
                     choose = 1;
@@ -56,7 +56,8 @@ namespace ConsoleApp1
                         Console.WriteLine("2 число: " + Obrabotka(start, end, number2));
                         Console.WriteLine("Результат: " + AddBinary(Obrabotka(start, end, number),
                             Obrabotka(start, end, number2)));
-                    } else if (choose == 2)
+                    }
+                    else if (choose == 2)
                     {
                         bool otr = false;
                         string s1 = "";
@@ -65,7 +66,7 @@ namespace ConsoleApp1
                         Console.WriteLine("2 число: " + Obrabotka(start, end, number2));
                         if (Obrabotka(start, end, number).StartsWith('1'))
                         {
-                            s1 += '0' + Obrabotka(start, end, number).Substring(1, Obrabotka(start, end, number).Length-1);
+                            s1 += '0' + Obrabotka(start, end, number).Substring(1, Obrabotka(start, end, number).Length - 1);
                             otr = true;
                         }
                         else
@@ -77,7 +78,7 @@ namespace ConsoleApp1
                             s2 += '0' + Obrabotka(start, end, number2).Substring(1, Obrabotka(start, end, number2).Length - 1);
                             if (otr)
                                 otr = false;
-                            else 
+                            else
                                 otr = true;
                         }
                         else
@@ -86,13 +87,22 @@ namespace ConsoleApp1
                         }
                         Console.WriteLine("1 число после: " + s1);
                         Console.WriteLine("2 число после: " + s2);
-                        int count = 0;
-                        while (AddBinary(s1, "10000001")!="00000000")
+                        bool sumOrNo = true;
+                        do
                         {
-                            Console.WriteLine(count);
-                                count++;
-                        }
-                    }
+                            secondLoop = false;
+                            string temp = AddBinary(s1, "10000001");
+                            s1 = temp;
+                            if (sumOrNo)
+                            {
+                                s2 = AddBinary(s2, s2);
+                                sumOrNo = false;
+                            }
+                            else
+                                sumOrNo = true;
+                        } while (!s1.Contains("00000000") & !s1.Contains("10000000"));
+                        Console.WriteLine(s2);
+                    } 
                 }
                 else
                 {
@@ -132,7 +142,8 @@ namespace ConsoleApp1
                     s /= 2;
                     i--; j--;
                 }
-            } else if (a.StartsWith('1') || b.StartsWith('1'))
+            }
+            else if (a.StartsWith('1') || b.StartsWith('1'))
             {
                 if (!secondLoop)
                 {
