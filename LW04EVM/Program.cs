@@ -54,10 +54,10 @@ namespace ConsoleApp1
                     {
                         Console.WriteLine("1 число: " + Obrabotka(start, end, number));
                         Console.WriteLine("2 число: " + Obrabotka(start, end, number2));
-                        Console.WriteLine("Результат: " + AddBinary(Obrabotka(start, end, number),
+                        Console.WriteLine("Ответ: " + AddBinary(Obrabotka(start, end, number),
                             Obrabotka(start, end, number2)));
                     }
-                    else if (choose == 2)
+                    else if (choose > 1)
                     {
                         bool otr = false;
                         string s1 = "";
@@ -85,24 +85,38 @@ namespace ConsoleApp1
                         {
                             s2 = Obrabotka(start, end, number2);
                         }
-                        Console.WriteLine("1 число после: " + s1);
-                        Console.WriteLine("2 число после: " + s2);
-                        bool sumOrNo = true;
-                        do
+                        if (choose == 2)
                         {
-                            secondLoop = false;
-                            string temp = AddBinary(s1, "10000001");
-                            s1 = temp;
-                            if (sumOrNo)
+                            string temp2 = "00000000";
+                            do
                             {
-                                s2 = AddBinary(s2, s2);
-                                sumOrNo = false;
+                                secondLoop = false;
+                                string temp = AddBinary(s1, "10000001");
+                                s1 = temp;
+                                temp2 = AddBinary(temp2, s2);
+                            } while (!s1.Contains("00000000") & !s1.Contains("10000000"));
+                            if (otr)
+                            {
+                                Console.WriteLine("Ответ: 1" + temp2.Substring(1, temp2.Length - 1));
                             }
-                            else
-                                sumOrNo = true;
-                        } while (!s1.Contains("00000000") & !s1.Contains("10000000"));
-                        Console.WriteLine(s2);
-                    } 
+                            else Console.WriteLine("Ответ: " + temp2);
+                        } else if (choose==3)
+                        {
+                            string count = "00000000";
+                            do
+                            {
+                                secondLoop = false;
+                                s1 = AddBinary(s1, '1' + s2.Substring(1, s2.Length - 1));
+                                count = AddBinary(count, "00000001");
+                            } while (!s1.Equals("00000000") & !s1.Equals("10000000") || !s1.StartsWith('1'));
+                            if (!s1.Equals("10000000"))
+                                Console.WriteLine("Нацело не делится.");
+                            else if (otr)
+                                Console.WriteLine("Ответ: 1" + count.Substring(1, count.Length - 1));
+                            else Console.WriteLine("Ответ: " + count);
+                        }
+                    }
+
                 }
                 else
                 {
@@ -111,7 +125,6 @@ namespace ConsoleApp1
 
             }
         }
-
         static string Obrabotka(int start, int end, string number)
         {
             if (start == 10 && number[0] == '-')
@@ -171,6 +184,10 @@ namespace ConsoleApp1
                 if (result.StartsWith('1'))
                     return ObrKod(result);
             }
+            if (result.Length > 8)
+                return result.Substring(result.Length-8, result.Length - 1);
+            if (result.Equals("10000000"))
+                return "00000000";
             return result;
         }
         static string ObrKod(string s)
